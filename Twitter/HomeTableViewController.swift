@@ -57,11 +57,13 @@ class HomeTableViewController: UITableViewController {
             print("Could not retreive tweets.")
         })
     }
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return tweetArray.count
-        loadMoreTweets()
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell ,forRowAt indexPath: IndexPath) {
+        if indexPath.row + 1 == tweetArray.count {
+            loadMoreTweets()
+        }
     }
+    
 
     @IBAction func onLogout(_ sender: Any) {
         TwitterAPICaller.client?.logout()
@@ -88,6 +90,11 @@ class HomeTableViewController: UITableViewController {
     }
 
     // MARK: - Table view data source
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // #warning Incomplete implementation, return the number of rows
+        return tweetArray.count
+        
+    }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
